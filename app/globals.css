@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+:root {
+  --bg-base: #0B0F19;
+  --bg-card: rgba(255, 255, 255, 0.04);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.16);
+  --text-primary: #E8EAED;
+  --text-muted: #6B7585;
+  --accent: #818CF8;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+.glass {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #E8EAED 0%, #818CF8 70%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 30%, rgba(255,255,255,0.06) 70%, transparent 100%);
+}
+
+/* ─── Card hover — only composited properties in transition ─── */
+.card-service {
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-service:hover {
+  border-color: rgba(129, 140, 248, 0.35) !important;
+  transform: translateY(-5px);
+  box-shadow: 0 20px 52px rgba(0,0,0,0.45), 0 0 36px rgba(129,140,248,0.15);
+}
+
+.card-case {
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-case:hover {
+  border-color: rgba(99, 102, 241, 0.4) !important;
+  transform: translateY(-7px);
+  box-shadow: 0 24px 56px rgba(0,0,0,0.5), 0 0 40px rgba(99,102,241,0.18);
+}
+
+.card-testimonial {
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-testimonial:hover {
+  border-color: rgba(139, 92, 246, 0.35) !important;
+  transform: translateY(-5px);
+  box-shadow: 0 20px 52px rgba(0,0,0,0.45), 0 0 40px rgba(139,92,246,0.14);
+}
+
+/* ─── Orb drift — will-change for compositor layer ─── */
+@keyframes orb-drift-a {
+  0%, 100% { transform: translate(0px, 0px); }
+  33%  { transform: translate(14px, -18px); }
+  66%  { transform: translate(-10px, 10px); }
+}
+@keyframes orb-drift-b {
+  0%, 100% { transform: translate(0px, 0px); }
+  40%  { transform: translate(-16px, 12px); }
+  70%  { transform: translate(10px, -14px); }
+}
+.orb-1 { animation: orb-drift-a 26s ease-in-out infinite; will-change: transform; }
+.orb-2 { animation: orb-drift-b 32s ease-in-out infinite; will-change: transform; }
+.orb-3 { animation: orb-drift-a 22s ease-in-out infinite reverse; will-change: transform; }
+
+/* ─── Floating card pulse — will-change for smooth compositor layer ─── */
+@keyframes float-y {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
+}
+.float-a { animation: float-y 3.6s ease-in-out infinite; will-change: transform; }
+.float-b { animation: float-y 4.2s ease-in-out infinite 0.6s; will-change: transform; }
+.float-c { animation: float-y 3.0s ease-in-out infinite 1.2s; will-change: transform; }
