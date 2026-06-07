@@ -32,7 +32,6 @@ function buildPts(data: number[]) {
   }));
 }
 
-// Cardinal spline → cubic bezier (t = tension)
 function smoothPath(pts: { x: number; y: number }[], t = 0.38): string {
   const n = pts.length;
   let d = `M ${pts[0].x.toFixed(1)},${pts[0].y.toFixed(1)}`;
@@ -63,73 +62,54 @@ const ACTIVITY = [
   { dot: "bg-violet-400",  name: "CoffeePoint", action: "Reels набрал 80K просм.", time: "1д" },
 ];
 
-const ease = [0.25, 0.1, 0.25, 1] as const;
-
 export default function Hero() {
   const [started, setStarted] = useState(false);
-  // No artificial delay — start count-up after first paint
   useEffect(() => {
     const t = setTimeout(() => setStarted(true), 100);
     return () => clearTimeout(t);
   }, []);
 
-  const c150 = useCountUp(150, 700,  started);
-  const c12  = useCountUp(12,  750,  started);
-  const c7   = useCountUp(7,   600,  started);
+  const c150 = useCountUp(150, 700, started);
+  const c12  = useCountUp(12,  750, started);
+  const c7   = useCountUp(7,   600, started);
 
   return (
     <section className="relative min-h-[90vh] flex items-center pt-16 grid-bg">
 
-      {/* Background orbs */}
+      {/* Background orbs — reduced blur for GPU relief */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="orb-1 absolute top-[8%]  left-[5%]  w-[560px] h-[560px] rounded-full bg-indigo-600/[0.07] blur-[120px]" />
-        <div className="orb-2 absolute bottom-[8%] right-[2%] w-[420px] h-[420px] rounded-full bg-violet-600/[0.06] blur-[100px]" />
-        <div className="orb-3 absolute top-[55%]  left-[45%] w-[280px] h-[280px] rounded-full bg-blue-600/[0.04]   blur-[80px]"  />
+        <div className="orb-1 absolute top-[8%]  left-[5%]  w-[480px] h-[480px] rounded-full bg-indigo-600/[0.07] blur-[80px]" />
+        <div className="orb-2 absolute bottom-[8%] right-[2%] w-[360px] h-[360px] rounded-full bg-violet-600/[0.06] blur-[70px]" />
+        <div className="orb-3 absolute top-[55%]  left-[45%] w-[240px] h-[240px] rounded-full bg-blue-600/[0.04]   blur-[55px]" />
       </div>
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
 
-          {/* ── LEFT ── */}
+          {/* ── LEFT — CSS-animated: visible before JS loads ── */}
           <div className="flex-1 max-w-xl w-full">
 
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, ease }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass border-white/[0.1] mb-6"
-            >
+            {/* Badge — CSS animation, no JS needed */}
+            <div className="hero-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass border-white/[0.1] mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
               <span className="text-xs text-white/60 font-medium tracking-wide">Контент-маркетинг под ключ</span>
-            </motion.div>
+            </div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.08, ease }}
-              className="text-4xl sm:text-5xl lg:text-[58px] font-bold leading-[1.1] tracking-tight mb-6"
-            >
+            {/* H1 — CSS animation */}
+            <h1 className="hero-h1 text-4xl sm:text-5xl lg:text-[58px] font-bold leading-[1.1] tracking-tight mb-6">
               <span className="text-white">Контент, который</span>
               <br />
               <span className="gradient-text">приводит клиентов</span>
-            </motion.h1>
+            </h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.12, ease: "easeOut" }}
-              className="text-base sm:text-lg text-white/50 leading-relaxed mb-10 max-w-lg"
-            >
+            {/* Paragraph — CSS animation */}
+            <p className="hero-p text-base sm:text-lg text-white/50 leading-relaxed mb-10 max-w-lg">
               Создаём стратегию, тексты, SMM и рекламу — всё в одном месте.
               Вы занимаетесь бизнесом, мы берём на себя весь контент.
-            </motion.p>
+            </p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35, delay: 0.18 }}
-              className="flex flex-col sm:flex-row gap-3"
-            >
+            {/* Buttons — CSS animation */}
+            <div className="hero-btns flex flex-col sm:flex-row gap-3">
               <a
                 href="#cases"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-indigo-500/90 hover:bg-indigo-500 text-white font-medium rounded-xl transition-all duration-200 shadow-lg shadow-indigo-500/20 text-sm"
@@ -145,9 +125,9 @@ export default function Hero() {
               >
                 Получить предложение
               </a>
-            </motion.div>
+            </div>
 
-            {/* Count-up stats */}
+            {/* Count-up stats — framer-motion: coords JS anyway for count-up values */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -167,15 +147,10 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* ── RIGHT — Dashboard + floating cards ── */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.45, delay: 0.08, ease: "easeOut" }}
-            className="relative flex-shrink-0 w-full max-w-[380px] lg:max-w-[410px]"
-          >
+          {/* ── RIGHT — CSS-animated wrapper, framer-motion only for floating cards + SVG ── */}
+          <div className="hero-card relative flex-shrink-0 w-full max-w-[380px] lg:max-w-[410px]">
 
-            {/* Floating card — top (+124 лида) */}
+            {/* Floating card — top (+124 лида) — framer-motion, decorative */}
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1,  y: 0 }}
@@ -222,7 +197,7 @@ export default function Hero() {
               </div>
             </motion.div>
 
-            {/* Main analytics card */}
+            {/* Main analytics card — visible immediately */}
             <div className="glass rounded-[20px] p-5 shadow-2xl shadow-black/40 relative z-0">
               <div className="flex items-start justify-between mb-4">
                 <div>
@@ -234,7 +209,7 @@ export default function Hero() {
                 </span>
               </div>
 
-              {/* ── SVG Line Chart ── */}
+              {/* ── SVG Line Chart — framer-motion for pathLength ── */}
               <div className="mb-1">
                 <svg
                   viewBox={`0 0 ${SVG_W} ${SVG_H}`}
@@ -255,7 +230,6 @@ export default function Hero() {
                     </clipPath>
                   </defs>
 
-                  {/* Area fill — appears just after line finishes */}
                   <motion.path
                     d={AREA_D}
                     fill="url(#heroAreaGrad)"
@@ -265,7 +239,6 @@ export default function Hero() {
                     transition={{ duration: 0.35, delay: 0.75 }}
                   />
 
-                  {/* Glow halo */}
                   <motion.path
                     d={LINE_D}
                     fill="none"
@@ -279,7 +252,6 @@ export default function Hero() {
                     transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
                   />
 
-                  {/* Main line */}
                   <motion.path
                     d={LINE_D}
                     fill="none"
@@ -292,7 +264,6 @@ export default function Hero() {
                     transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
                   />
 
-                  {/* Key dots */}
                   {KEY_IDXS.map((idx) => {
                     const pt     = CHART_PTS[idx];
                     const isTip  = idx === 9;
@@ -354,7 +325,7 @@ export default function Hero() {
               </div>
             </div>
 
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
