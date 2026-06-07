@@ -100,3 +100,18 @@ body {
 .float-a { animation: float-y 3.6s ease-in-out infinite; will-change: transform; }
 .float-b { animation: float-y 4.2s ease-in-out infinite 0.6s; will-change: transform; }
 .float-c { animation: float-y 3.0s ease-in-out infinite 1.2s; will-change: transform; }
+
+/* ─── Respect OS reduced-motion preference ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+  .orb-1, .orb-2, .orb-3,
+  .float-a, .float-b, .float-c {
+    animation: none;
+    will-change: auto;
+  }
+}

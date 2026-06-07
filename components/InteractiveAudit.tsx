@@ -154,7 +154,7 @@ export default function InteractiveAudit() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.4 }}
           className="text-center mb-12"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-5">
@@ -177,7 +177,7 @@ export default function InteractiveAudit() {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ duration: 0.4, delay: 0.05 }}
             className="glass rounded-[24px] p-6 sm:p-7"
           >
             {/* Card header */}
@@ -214,7 +214,7 @@ export default function InteractiveAudit() {
                   initial={{ opacity: 0, x: -12 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.35, delay: 0.15 + i * 0.06 }}
+                  transition={{ duration: 0.3, delay: 0.08 + i * 0.05 }}
                   className={`flex items-center justify-between gap-4 py-4 ${
                     i < QUESTIONS.length - 1 ? "border-b border-white/[0.05]" : ""
                   }`}
@@ -261,7 +261,7 @@ export default function InteractiveAudit() {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
             className="glass rounded-[24px] p-6 sm:p-7 flex flex-col gap-6"
           >
             {/* Ring + score label */}

@@ -53,7 +53,6 @@ function smoothPath(pts: { x: number; y: number }[], t = 0.38): string {
 const CHART_PTS = buildPts(CHART_DATA);
 const LINE_D    = smoothPath(CHART_PTS);
 const AREA_D    = `${LINE_D} L ${SVG_W},${SVG_H} L 0,${SVG_H} Z`;
-// Notable points: Авг, Окт, Дек — show upward trend
 const KEY_IDXS  = [5, 7, 9];
 
 // ── Static content ────────────────────────────────────────────────────────────
@@ -68,14 +67,15 @@ const ease = [0.25, 0.1, 0.25, 1] as const;
 
 export default function Hero() {
   const [started, setStarted] = useState(false);
+  // No artificial delay — start count-up after first paint
   useEffect(() => {
-    const t = setTimeout(() => setStarted(true), 700);
+    const t = setTimeout(() => setStarted(true), 100);
     return () => clearTimeout(t);
   }, []);
 
-  const c150 = useCountUp(150, 1600, started);
-  const c12  = useCountUp(12,  1800, started);
-  const c7   = useCountUp(7,   1200, started);
+  const c150 = useCountUp(150, 700,  started);
+  const c12  = useCountUp(12,  750,  started);
+  const c7   = useCountUp(7,   600,  started);
 
   return (
     <section className="relative min-h-[90vh] flex items-center pt-16 grid-bg">
@@ -94,9 +94,9 @@ export default function Hero() {
           <div className="flex-1 max-w-xl w-full">
 
             <motion.div
-              initial={{ opacity: 0, y: 14 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease }}
+              transition={{ duration: 0.3, ease }}
               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass border-white/[0.1] mb-6"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
@@ -104,9 +104,9 @@ export default function Hero() {
             </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, y: 28 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, delay: 0.1, ease }}
+              transition={{ duration: 0.4, delay: 0.08, ease }}
               className="text-4xl sm:text-5xl lg:text-[58px] font-bold leading-[1.1] tracking-tight mb-6"
             >
               <span className="text-white">Контент, который</span>
@@ -115,9 +115,9 @@ export default function Hero() {
             </motion.h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 18 }}
+              initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.22, ease: "easeOut" }}
+              transition={{ duration: 0.4, delay: 0.12, ease: "easeOut" }}
               className="text-base sm:text-lg text-white/50 leading-relaxed mb-10 max-w-lg"
             >
               Создаём стратегию, тексты, SMM и рекламу — всё в одном месте.
@@ -125,9 +125,9 @@ export default function Hero() {
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 14 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.36 }}
+              transition={{ duration: 0.35, delay: 0.18 }}
               className="flex flex-col sm:flex-row gap-3"
             >
               <a
@@ -149,9 +149,9 @@ export default function Hero() {
 
             {/* Count-up stats */}
             <motion.div
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
+              transition={{ duration: 0.35, delay: 0.28 }}
               className="flex items-center gap-8 mt-12 pt-10 border-t border-white/[0.06]"
             >
               {[
@@ -169,17 +169,17 @@ export default function Hero() {
 
           {/* ── RIGHT — Dashboard + floating cards ── */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+            transition={{ duration: 0.45, delay: 0.08, ease: "easeOut" }}
             className="relative flex-shrink-0 w-full max-w-[380px] lg:max-w-[410px]"
           >
 
             {/* Floating card — top (+124 лида) */}
             <motion.div
-              initial={{ opacity: 0, y: -12 }}
+              initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1,  y: 0 }}
-              transition={{ duration: 0.45, delay: 0.95 }}
+              transition={{ duration: 0.35, delay: 0.2 }}
               className="float-a hidden sm:flex absolute -top-6 left-4 items-center gap-3 glass px-4 py-2.5 rounded-xl border-emerald-500/30 bg-emerald-500/10 z-10 shadow-xl shadow-black/50"
             >
               <div className="w-7 h-7 rounded-lg bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
@@ -195,9 +195,9 @@ export default function Hero() {
 
             {/* Floating card — right (+38% CTR) */}
             <motion.div
-              initial={{ opacity: 0, x: 12 }}
+              initial={{ opacity: 0, x: 10 }}
               animate={{ opacity: 1,  x: 0 }}
-              transition={{ duration: 0.45, delay: 1.05 }}
+              transition={{ duration: 0.35, delay: 0.28 }}
               className="float-b hidden lg:flex absolute top-[38%] -right-16 flex-col items-center glass px-4 py-3 rounded-xl border-indigo-500/30 bg-indigo-500/10 z-10 shadow-xl shadow-black/50 gap-0.5"
             >
               <span className="text-base font-bold text-indigo-300 whitespace-nowrap leading-none">+38%</span>
@@ -206,9 +206,9 @@ export default function Hero() {
 
             {/* Floating card — bottom (ROI ×4.2) */}
             <motion.div
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1,  y: 0 }}
-              transition={{ duration: 0.45, delay: 1.15 }}
+              transition={{ duration: 0.35, delay: 0.35 }}
               className="float-c hidden sm:flex absolute -bottom-6 right-4 items-center gap-3 glass px-4 py-2.5 rounded-xl border-violet-500/30 bg-violet-500/10 z-10 shadow-xl shadow-black/50"
             >
               <div className="w-7 h-7 rounded-lg bg-violet-500/20 flex items-center justify-center flex-shrink-0">
@@ -241,34 +241,31 @@ export default function Hero() {
                   style={{ width: "100%", height: 80, overflow: "visible" }}
                 >
                   <defs>
-                    {/* Horizontal gradient indigo → violet */}
                     <linearGradient id="heroLineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                       <stop offset="0%"   stopColor="#6366F1" stopOpacity="0.7" />
                       <stop offset="55%"  stopColor="#818CF8" stopOpacity="1"   />
                       <stop offset="100%" stopColor="#A78BFA" stopOpacity="1"   />
                     </linearGradient>
-                    {/* Vertical gradient for area fill */}
                     <linearGradient id="heroAreaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
                       <stop offset="0%"   stopColor="#818CF8" stopOpacity="0.22" />
                       <stop offset="100%" stopColor="#818CF8" stopOpacity="0"    />
                     </linearGradient>
-                    {/* Clip area fill to chart bounds */}
                     <clipPath id="heroChartClip">
                       <rect x="0" y="0" width={SVG_W} height={SVG_H} />
                     </clipPath>
                   </defs>
 
-                  {/* Area fill — fades in after line is drawn */}
+                  {/* Area fill — appears just after line finishes */}
                   <motion.path
                     d={AREA_D}
                     fill="url(#heroAreaGrad)"
                     clipPath="url(#heroChartClip)"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ duration: 0.9, delay: 1.1 }}
+                    transition={{ duration: 0.35, delay: 0.75 }}
                   />
 
-                  {/* Glow halo — wider, low opacity version of the line */}
+                  {/* Glow halo */}
                   <motion.path
                     d={LINE_D}
                     fill="none"
@@ -279,7 +276,7 @@ export default function Hero() {
                     strokeLinejoin="round"
                     initial={{ pathLength: 0 }}
                     animate={{ pathLength: 1 }}
-                    transition={{ duration: 1.4, delay: 0.65, ease: "easeOut" }}
+                    transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
                   />
 
                   {/* Main line */}
@@ -292,15 +289,15 @@ export default function Hero() {
                     strokeLinejoin="round"
                     initial={{ pathLength: 0 }}
                     animate={{ pathLength: 1 }}
-                    transition={{ duration: 1.4, delay: 0.65, ease: "easeOut" }}
+                    transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
                   />
 
-                  {/* Key dots — pop in as line reaches each point */}
+                  {/* Key dots */}
                   {KEY_IDXS.map((idx) => {
                     const pt     = CHART_PTS[idx];
                     const isTip  = idx === 9;
                     const radius = isTip ? 3.5 : 2.5;
-                    const delay  = 0.65 + 1.4 * (pt.x / SVG_W) * 0.82;
+                    const delay  = 0.15 + 0.7 * (pt.x / SVG_W) * 0.82;
                     return (
                       <motion.circle
                         key={idx}
@@ -311,7 +308,7 @@ export default function Hero() {
                         strokeWidth={isTip ? 5 : 4}
                         initial={{ r: 0, opacity: 0 }}
                         animate={{ r: radius, opacity: 1 }}
-                        transition={{ duration: 0.3, delay, ease: "easeOut" }}
+                        transition={{ duration: 0.25, delay, ease: "easeOut" }}
                       />
                     );
                   })}

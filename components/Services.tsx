@@ -78,7 +78,7 @@ export default function Services() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.55 }}
+          transition={{ duration: 0.4 }}
           className="mb-12"
         >
           <p className="text-xs font-medium text-indigo-400/80 uppercase tracking-widest mb-3">Что мы делаем</p>
@@ -94,7 +94,7 @@ export default function Services() {
               key={s.title}
               initial={{ opacity: 0, y: 28 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: i * 0.07, ease: "easeOut" }}
+              transition={{ duration: 0.4, delay: i * 0.06, ease: "easeOut" }}
               className="glass card-service rounded-[20px] p-6"
             >
               <div className="flex items-center justify-between mb-5">
